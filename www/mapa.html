@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Argumenta</title>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet" href="./css/style.css">
+	<style>
+		.caja{
+			min-width: 200px;
+			height: 150px; 
+			border: 1px solid gray;
+			float: left;
+			padding: 0.5em; 
+		}
+		.panel{
+			border: 1px solid gray;
+			margin: 10px;
+			padding: 10px;
+		}
+		.afirmacion{
+			border: 1px solid blue;
+		}
+		.razon{
+			border: 1px solid green;
+		}
+		.objecion{
+			border: 1px solid red;
+		}
+	</style>
+	<script>
+	
+		var actual=0;
+		var contador=0;
+		function agregar(tipo, titulo, argumento){
+			arg = $('<div id="arg_'+contador+'" class="'+tipo+' caja"><div class="titulo">'+titulo+'</div><div class="contenido">'+argumento+'</div></div>');
+			$(arg).draggable({
+				start: function() {
+					actual = $(this).data("id");
+				},
+				drag: function() {
+				},
+				stop: function() {
+				}
+			});
+			$(arg).data("id", contador);
+			$(arg).data("id-origen", actual);
+			actual = contador;
+			$('#datos').append(arg);
+			contador++;
+		}
+	
+		$(function() {
+
+			close_link = $('<a class="" href="#">Click here to see an alert</a>');
+			$("#afirm").click(function(){
+				agregar("afirmacion", "Titulo argumento", "Texto argumento loren ipsum");
+			});
+			$("#razon").click(function(){
+				agregar("razon", "Titulo razon", "Texto argumento loren ipsum");
+			});
+			$("#objec").click(function(){
+				agregar("objecion", "Titulo objecion", "Texto argumento loren ipsum");
+			});
+
+
+
+		});
+	</script>
+</head>
+<body>
+
+<div class="row">
+	<div class="panel">
+		<div id="afirm" class="afirmacion btn">Afirmación</div>
+		<div id="razon" class="razon btn">Razón</div>
+		<div id="objec" class="objecion btn">Objeción</div>
+	</div>
+	<div class="col-md-10" id="datos"></div>
+</div>
+
+
+	
+ 
+ 
+</body>
+</html>
