@@ -3,13 +3,54 @@
 <head>
 	<meta charset="utf-8">
 	<title>Argumenta</title>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	
+
+
+	<script type="text/javascript">
+      google.load("visualization", "1", {packages:["orgchart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Name');
+        data.addColumn('string', 'Manager');
+        data.addColumn('string', 'ToolTip');
+
+        data.addRows([
+          [{v:'Mike', f:'Mike<div style="color:red; font-style:italic">President</div>'}, '', 'The President'],
+          [{v:'Jim', f:'Jim<div style="color:red; font-style:italic">Vice President</div>'}, 'Mike', 'VP'],
+          ['Alice', 'Mike', ''],
+          ['Bob', 'Jim', 'Bob Sponge'],
+          ['Carol', 'Bob', '']
+        ]);
+
+        var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+        chart.draw(data, {allowHtml:true});
+        
+        
+        
+      }
+      
+      
+	$(function() {
+
+		$("#afirm").click(function(){
+			drawChart();
+		});
+		$("#razon").click(function(){
+			drawChart();
+		});
+		$("#objec").click(function(){
+			drawChart();
+		});
+		
+
+	});
+      
+   </script>  
+  	
 	<link rel="stylesheet" href="./css/style.css">
 	<style>
 		.caja{
@@ -34,7 +75,7 @@
 			border: 1px solid red;
 		}
 	</style>
-	<script>
+	<!--script>
 	
 		var actual=0;
 		var contador=0;
@@ -55,6 +96,26 @@
 			$('#datos').append(arg);
 			contador++;
 		}
+		function touchHandler(event)
+		{
+			var touches = event.changedTouches,
+			first = touches[0],
+			type = "";
+			switch(event.type)
+			{
+				case "touchstart": type = "mousedown"; break;
+				case "touchmove":  type="mousemove"; break;        
+				case "touchend":   type="mouseup"; break;
+				default: return;
+			}
+			var simulatedEvent = document.createEvent("MouseEvent");
+			simulatedEvent.initMouseEvent(type, true, true, window, 1,
+							  first.screenX, first.screenY,
+							  first.clientX, first.clientY, false,
+							  false, false, false, 0/*left*/, null);
+			first.target.dispatchEvent(simulatedEvent); 
+			event.preventDefault();
+		}
 	
 		$(function() {
 
@@ -68,21 +129,22 @@
 			$("#objec").click(function(){
 				agregar("objecion", "Titulo objecion", "Texto argumento loren ipsum");
 			});
-
-
+			
 
 		});
-	</script>
+	</script-->
 </head>
 <body>
 
 <div class="row">
+	v: 0.5
 	<div class="panel">
-		<div id="afirm" class="afirmacion btn">Afirmación</div>
-		<div id="razon" class="razon btn">Razón</div>
-		<div id="objec" class="objecion btn">Objeción</div>
+		<button id="afirm" class="afirmacion">Afirmación</button>
+		<button id="razon" class="razon">Razón</button>
+		<button id="objec" class="objecion">Objeción</button>
 	</div>
-	<div class="col-md-10" id="datos"></div>
+   <div id="chart_div""></div>
+
 </div>
 
 
